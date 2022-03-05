@@ -21,6 +21,7 @@ class CreateAuctions < ActiveRecord::Migration[6.1]
       t.string :source
       t.string :metadata_uri
       t.string :highest_bidder_username
+      t.boolean :cdn_uploaded
       t.timestamps
     end
     add_index :auctions, :start_time
