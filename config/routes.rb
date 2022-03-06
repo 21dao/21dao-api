@@ -7,8 +7,4 @@ Rails.application.routes.draw do
     post '/ending', to: 'auctions#ending_soon'
     post '/sellers', to: 'auctions#top_sellers'
   end
-
-  scope :listings do
-    post '/all', to: 'listings#live_listings'
-  end
 end
