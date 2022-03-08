@@ -28,6 +28,30 @@ class AuctionsController < ApplicationController
     render json: { status: 'success', auctions: auctions }.to_json
   end
 
+  def highest_bid
+    auctions = Auction.where("end_time > #{Time.now.to_i}")
+                      .where("mint IS NOT NULL AND image IS NOT NULL AND highest_bid IS NOT NULL")
+                      .order(highest_bid: :desc)
+
+    auctions = auctions.where(source: params[:marketplace]) if check_marketplaces
+
+    auctions = limit_and_offset(auctions)
+
+    render json: { status: 'success', auctions: auctions }.to_json
+  end
+
+  def most_bids
+    auctions = Auction.where("end_time > #{Time.now.to_i}")
+                      .where("mint IS NOT NULL AND image IS NOT NULL AND number_bids IS NOT NULL")
+                      .order(number_bids: :desc)
+
+    auctions = auctions.where(source: params[:marketplace]) if check_marketplaces
+
+    auctions = limit_and_offset(auctions)
+
+    render json: { status: 'success', auctions: auctions }.to_json
+  end
+
   def top_sales
     auctions = Auction.where("end_time > #{(Time.now - days.day).to_i}")
                       .where("end_time < #{Time.now.to_i}")
