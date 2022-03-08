@@ -60,7 +60,7 @@ class AuctionsController < ApplicationController
   end
 
   def top_buyers
-    auctions = Auction.select("highest_bidder COUNT(*) as auctions, SUM(number_bids) as bids, SUM(highest_bid) as total")
+    auctions = Auction.select("highest_bidder, COUNT(*) as auctions, SUM(number_bids) as bids, SUM(highest_bid) as total")
                       .where("highest_bidder IS NOT NULL")
                       .where("end_time > #{(Time.now - days.day).to_i}")
                       .where("end_time < #{Time.now.to_i}")
