@@ -4,7 +4,7 @@ MARKETPLACES = %w[holaplex exchange formfunction].freeze
 DAYS = [1, 7].freeze
 
 class AuctionsController < ApplicationController
-  def live_auctions
+  def all_by_artists
     auctions = Auction.where("start_time < #{Time.now.to_i} AND end_time > #{Time.now.to_i}")
                       .where("lower(brand_name) LIKE ANY ('{#{artist_names}}')")
                       .where("mint IS NOT NULL AND image IS NOT NULL")
@@ -16,38 +16,15 @@ class AuctionsController < ApplicationController
     render json: { status: 'success', auctions: auctions }.to_json
   end
 
-  def ending_soon
+  def all
     auctions = Auction.where("end_time > #{Time.now.to_i}")
                       .where("mint IS NOT NULL AND image IS NOT NULL")
-                      .order(end_time: :asc)
 
     auctions = auctions.where(source: params[:marketplace]) if check_marketplaces
 
     auctions = limit_and_offset(auctions)
 
-    render json: { status: 'success', auctions: auctions }.to_json
-  end
-
-  def highest_bid
-    auctions = Auction.where("end_time > #{Time.now.to_i}")
-                      .where("mint IS NOT NULL AND image IS NOT NULL AND highest_bid IS NOT NULL")
-                      .order(highest_bid: :desc)
-
-    auctions = auctions.where(source: params[:marketplace]) if check_marketplaces
-
-    auctions = limit_and_offset(auctions)
-
-    render json: { status: 'success', auctions: auctions }.to_json
-  end
-
-  def most_bids
-    auctions = Auction.where("end_time > #{Time.now.to_i}")
-                      .where("mint IS NOT NULL AND image IS NOT NULL AND number_bids IS NOT NULL")
-                      .order(number_bids: :desc)
-
-    auctions = auctions.where(source: params[:marketplace]) if check_marketplaces
-
-    auctions = limit_and_offset(auctions)
+    auctions = order_all_auctions(auctions)
 
     render json: { status: 'success', auctions: auctions }.to_json
   end

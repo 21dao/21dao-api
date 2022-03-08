@@ -28,4 +28,20 @@ class ApplicationController < ActionController::API
     auctions = auctions.offset(params[:offset].to_i) if params[:offset]
     auctions
   end
+
+  def order_all_auctions(auctions)
+    case params[:order]
+    when "ending"
+      auctions.order(end_time: :asc)
+    when "most_bids"
+      auctions.order("number_bids desc")
+    when "least_bids"
+      auctions.order("number_bids asc, end_time asc")
+    when "highest"
+      auctions.where("highest_bid IS NOT NULL").order("highest_bid desc")
+    when "lowest"
+      auctions.order("highest_bid asc")
+    else auctions
+    end
+  end
 end
