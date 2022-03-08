@@ -60,7 +60,7 @@ class AuctionsController < ApplicationController
   end
 
   def top_buyers
-    auctions = Auction.select("highest_bidder, highest_bidder_username, source, COUNT(*) as auctions, SUM(number_bids) as bids, SUM(highest_bid) as total")
+    auctions = Auction.select("highest_bidder COUNT(*) as auctions, SUM(number_bids) as bids, SUM(highest_bid) as total")
                       .where("highest_bidder IS NOT NULL")
                       .where("end_time > #{(Time.now - days.day).to_i}")
                       .where("end_time < #{Time.now.to_i}")
@@ -68,7 +68,7 @@ class AuctionsController < ApplicationController
                       .where("mint IS NOT NULL AND image IS NOT NULL")
                       .order(total: :desc)
                       .order(bids: :desc)
-                      .group(:highest_bidder, :highest_bidder_username, :source)
+                      .group(:highest_bidder)
 
     auctions = auctions.where(source: params[:marketplace]) if check_marketplaces
 
