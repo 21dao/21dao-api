@@ -62,8 +62,6 @@ GEM
       zeitwerk (~> 2.3)
     bootsnap (1.7.7)
       msgpack (~> 1.0)
-    bugsnag (6.24.2)
-      concurrent-ruby (~> 1.0)
     builder (3.2.4)
     byebug (11.1.3)
     concurrent-ruby (1.1.9)
@@ -164,7 +162,6 @@ PLATFORMS
 
 DEPENDENCIES
   bootsnap (>= 1.4.4)
-  bugsnag
   byebug
   dotenv-rails
   httparty
