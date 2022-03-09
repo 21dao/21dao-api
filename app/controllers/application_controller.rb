@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::API
-  def artist_names
-    params[:names].map do |s|
+  def artist_names(names)
+    names.map do |s|
       "%#{s.downcase.gsub(' ', '%')}%"
     end.join(',')
   end

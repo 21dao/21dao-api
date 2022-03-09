@@ -6,7 +6,7 @@ DAYS = [1, 7].freeze
 class AuctionsController < ApplicationController
   def all_by_artists
     auctions = Auction.where("start_time < #{Time.now.to_i} AND end_time > #{Time.now.to_i}")
-                      .where("lower(brand_name) LIKE ANY ('{#{artist_names}}')")
+                      .where("lower(brand_name) LIKE ANY ('{#{artist_names(params[:names])}}')")
                       .where("mint IS NOT NULL AND image IS NOT NULL")
 
     auctions = auctions.where(source: params[:marketplace]) if check_marketplaces
@@ -25,6 +25,17 @@ class AuctionsController < ApplicationController
     auctions = limit_and_offset(auctions)
 
     auctions = order_all_auctions(auctions)
+
+    render json: { status: 'success', auctions: auctions }.to_json
+  end
+
+  def twentyone_dao
+    names = Artist.pluck(:name)
+    auctions = Auction.where("end_time > #{Time.now.to_i}")
+                      .where("lower(brand_name) LIKE ANY ('{#{artist_names(names)}}')")
+                      .where("mint IS NOT NULL AND image IS NOT NULL")
+
+    auctions = auctions.where(source: params[:marketplace]) if check_marketplaces
 
     render json: { status: 'success', auctions: auctions }.to_json
   end

@@ -10,22 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_20_111001) do
+ActiveRecord::Schema.define(version: 202203019125900) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "arask_jobs", force: :cascade do |t|
-    t.string "job"
-    t.datetime "execute_at"
-    t.string "interval"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["execute_at"], name: "index_arask_jobs_on_execute_at"
-  end
-
   create_table "artists", force: :cascade do |t|
-    t.bigint "user_id"
     t.string "name"
     t.string "twitter"
     t.text "bio"
@@ -34,10 +24,8 @@ ActiveRecord::Schema.define(version: 2023_02_20_111001) do
     t.string "holaplex"
     t.string "formfunction"
     t.text "images"
-    t.boolean "directory", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_artists_on_user_id"
   end
 
   create_table "auctions", force: :cascade do |t|
@@ -48,7 +36,7 @@ ActiveRecord::Schema.define(version: 2023_02_20_111001) do
     t.bigint "ending_phase"
     t.bigint "extension"
     t.bigint "highest_bid"
-    t.integer "number_bids"
+    t.integer "number_bids", default: 0
     t.string "auction_account"
     t.string "mint"
     t.string "brand_id"
@@ -62,6 +50,9 @@ ActiveRecord::Schema.define(version: 2023_02_20_111001) do
     t.boolean "finalized", default: false
     t.string "highest_bidder"
     t.string "source"
+    t.string "metadata_uri"
+    t.string "highest_bidder_username"
+    t.boolean "cdn_uploaded", default: false
     t.index ["auction_account"], name: "index_auctions_on_auction_account"
     t.index ["brand_id"], name: "index_auctions_on_brand_id"
     t.index ["brand_name"], name: "index_auctions_on_brand_name"
@@ -95,40 +86,10 @@ ActiveRecord::Schema.define(version: 2023_02_20_111001) do
     t.string "name"
     t.string "description"
     t.string "title"
+    t.boolean "cdn_uploaded", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_listings_on_name"
-  end
-
-  create_table "nfts", force: :cascade do |t|
-    t.bigint "user_id"
-    t.text "metadata"
-    t.string "mint"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.boolean "visible", default: true
-    t.integer "order_id"
-    t.integer "max_supply"
-    t.integer "supply"
-    t.integer "edition"
-    t.string "edition_name"
-    t.index ["user_id"], name: "index_nfts_on_user_id"
-  end
-
-  create_table "users", force: :cascade do |t|
-    t.string "username"
-    t.text "keys"
-    t.string "api_key"
-    t.string "nonce"
-    t.boolean "loading", default: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.string "twitter"
-    t.string "exchange"
-    t.string "formfunction"
-    t.string "holaplex"
-    t.index ["keys"], name: "index_users_on_keys"
-    t.index ["username"], name: "index_users_on_username"
   end
 
 end
