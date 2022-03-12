@@ -6,7 +6,6 @@ Rails.application.routes.draw do
     post '/all_by_artists', to: 'auctions#all_by_artists'
     post '/sales', to: 'auctions#top_sales'
     post '/buyers', to: 'auctions#top_buyers'
-    post '/ending', to: 'auctions#ending_soon'
     post '/sellers', to: 'auctions#top_sellers'
   end
 
