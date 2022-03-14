@@ -9,6 +9,11 @@ class CreateArtists < ActiveRecord::Migration[6.1]
       t.string :holaplex
       t.string :formfunction
       t.text :images
+      t.text :public_keys
+      t.boolean :dao, default: false
+      t.string :api_key
+      t.boolean :loading, default: false
+      t.string :nonce
       t.timestamps
     end
   end

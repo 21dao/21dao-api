@@ -26,6 +26,8 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'rack-cors'
 
 gem 'httparty'
+gem 'rbnacl', git: 'https://github.com/RubyCrypto/rbnacl'
+gem 'solana_rpc_ruby', git: 'https://github.com/richard-fisher/solana-rpc-ruby'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

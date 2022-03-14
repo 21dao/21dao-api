@@ -20,4 +20,19 @@ Rails.application.routes.draw do
   scope :artists do
     post '/all', to: 'artists#all'
   end
+
+  scope :api_key do
+    post '/request', to: 'api_key#request_api_key'
+    post '/create', to: 'api_key#create_api_key'
+  end
+
+  scope :user do
+    post 'from_api_key', to: 'user#from_api_key'
+    post 'nfts', to: 'user#nfts'
+    post 'refresh', to: 'user#refresh'
+    post 'data', to: 'user#update_data'
+  end
+
+  post '/visibility', to: 'visibility#set_visibility_and_order'
+  post '/createusername', to: 'user#create_or_update_username'
 end
