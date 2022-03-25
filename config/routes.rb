@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     post '/sales', to: 'auctions#top_sales'
     post '/buyers', to: 'auctions#top_buyers'
     post '/sellers', to: 'auctions#top_sellers'
+    post '/last', to: 'auctions#last_by_buyer'
   end
 
   scope :listings do

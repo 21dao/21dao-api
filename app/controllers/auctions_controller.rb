@@ -88,4 +88,10 @@ class AuctionsController < ApplicationController
 
     render json: { status: 'success', auctions: auctions }.to_json
   end
+
+  def last_by_buyer
+    auction = Auction.where(highest_bidder: params[:buyer], finalized: true).order(end_time: :desc).limit(1).first
+
+    render json: { status: 'success', auction: auction }.to_json
+  end
 end
