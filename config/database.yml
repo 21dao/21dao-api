@@ -42,4 +42,4 @@ production:
   password: <%= ENV['DB_PASSWORD'] %>
   database: <%= ENV['DB_DATABASE'] %>
   reconnect: true
-  pool: 10
+  pool: 5

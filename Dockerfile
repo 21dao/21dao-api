@@ -13,4 +13,4 @@ ENV RAILS_ENV production
 EXPOSE 3002
 
 # Start the main process.
-CMD ["bundle", "exec", "puma", "-p", "3002", "-w", "0", "-t", "5:10"]
+CMD ["bundle", "exec", "puma", "-p", "3002", "-w", "0", "-t", "1:5"]
